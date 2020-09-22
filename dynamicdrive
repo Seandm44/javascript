@@ -1,0 +1,1602 @@
+var _sRoot = "../";
+var None = 0;
+var AccrualGroup = 1;
+var AccrualType = 2;
+var	Approval = 3;
+var Country = 4;
+var Employee = 5;
+var EmployeeStatus = 6;
+var Exception = 7;
+var	Filter = 8;
+var InfractionType = 9;
+var Job = 10;
+var	Holiday = 11;
+var LeaveRequest = 12;
+var Level = 13;
+var License = 14;
+var Message = 15;
+var MiscellaneousPay = 16;
+var PayrollID = ''; 
+
+var PayCalendar = 19;
+var PayGroup = 20;
+var Payroll = 21;
+var PayType = 22;
+var PointsGroup = 23;
+var RaceCode = 24;
+var Report = 25;
+
+var Role = 26;
+var EmployeeRole = 2601;
+var SecurityRole = 2602;
+
+var RoundingTable = 27;
+var	Rule = 28;
+var Schedule = 29;
+var Setting = 30;
+var Shift = 31;
+var StateMaster = 32;
+var StyleSheet = 33;
+var TaskScheduler = 34;
+var TerminationReason = 35;
+var TimeCard = 36;
+var TimeEditReason = 37;
+var TimeOffReason = 38;
+var User = 39;
+var UserSetting = 40;
+var Home=50;
+var ProxyUser = 51;
+var UserMessage=55;
+var TimeCardUDF=56;
+var Accrual=57;
+var EmployeeUDF=59;
+var WorkFlowNotification = 69;
+var Point=70;
+var Notification=71;
+var Infraction=72;
+var AccrualGroupAccrualType = 76;
+var ImportTemplate=77;
+var ExportTempate=78;
+var Import=79;
+var Export=80;
+
+var Site = 100;
+var Clock = 101;
+var FunctionKey = 102;
+var FunctionKeyTemplate = 103;
+var TimeEvent = 105;
+var BellSchedule = 106;
+
+var Company = 1001;
+var Division = 1002;
+var Department = 1003;
+var Location = 1004;
+var Position = 1005;
+
+var SystemReport = 2001;
+var UserDefinedReport = 2002;
+
+var MasterSchedule = 3001;
+var RotationSchedule = 3002;
+
+var AccruedRule = 4001;
+var BreakRule = 4002;
+var CallInRule = 4003;
+var OnCallRule = 4018;
+var CarryOverRule = 4004;
+var ThresholdRule = 4019;
+var EarnedRule = 4005;
+var GuaranteeRule = 4006;
+var DailyGuaranteeRule = 4901;
+var WeeklyGuaranteeRule = 4902;
+var PayPeriodGuaranteeRule = 4903;
+var HolidayRule = 4007;
+var MiscellaneousRule = 4008;
+var OverTimeRule = 4009;
+var PointsRule = 4010;
+var PremiumRule = 4011;
+var RoundingRule = 4012;
+var AutoExemptRule=4013;
+var PointsRuleAction=4014;
+
+var NotificationRule=4015;
+var NotificationExpirationRule=4016;
+var NotificationTrigger=4017;
+
+var PunchRoundRule = 4501;
+var InPunchRule = 4502;
+var OutPunchRule = 4504;
+var PunchSetRoundRule = 4508;
+var DailyTotalRoundRule = 4516;
+var DayBreakRule = 4532;
+var NewDayStartRule = 4564;
+var PhantomScheduleRule = 4628;
+
+var Daily = 4601;
+var Weekly = 4602;
+var PayPeriod = 4604;
+var CustomPeriod = 4608;
+var ConsecutiveDays = 4616;
+var NonConsecutiveDays = 4632;
+var UnScheduledDays = 4664;
+
+var ChargeToRule=4701;
+var CreditToRule=4702;
+var PointExpirationRule=4703;
+
+var TaskScheduleReports = 3401;
+var TaskScheduleCommunication = 3402;
+var TaskScheduleBuildSchedules = 3403;
+var TaskScheduleJobs = 3405;
+var TaskScheduleExecutable = 3404;
+var TaskScheduleRecalc = 3406;
+var TaskScheduleAbsences = 3407;
+var TaskScheduleWFNDelete = 3410;
+var TaskScheduleImportExport = 3411;
+var TaskScheduleBackup = 3413;
+
+var SystemSetting = 5001;
+var ScheduleandLeaveRequestSetting = 5002;
+
+var SystemLog = 5003;
+var County = 6001;
+
+var _bWindowClose = false;
+
+function POS()
+{
+    var POS = "POS";
+}
+
+function doOncontextmenu()
+{
+	var s = event.srcElement.tagName;
+	
+	if (s && s != "INPUT" && s != "TEXTAREA" || event.srcElement.disabled)
+	{
+		event.returnValue = false;
+	}
+}
+document.oncontextmenu = doOncontextmenu;
+
+function doOnselectstart()
+{
+	var s = event.srcElement.tagName;
+	if (s != "INPUT" && s != "TEXTAREA") event.returnValue = false;
+}
+document.onselectstart = doOnselectstart;
+
+function doOndragstart()
+{
+	event.returnValue = false;
+}
+document.ondragstart = doOndragstart;
+
+function openStdWin(sPath, sName, iX, iY)
+{
+	if (!iX) iX = 750;
+	if (!iY) iY = 510;
+	//Added the code to Show the Popup at the Center of the Screen.
+	var screenWidth = window.screen.width;
+	var screenHeight = window.screen.height;
+	var width = (screenWidth - iX)/2;
+	var height = (screenHeight - iY)/2;
+	try
+	{
+		
+		var o=window.open(sPath, sName, "width=" + iX + ",height=" + iY + ",status=1,resizable=1");
+		//keep track of opened window
+		addWindowHistory(o);
+		
+	}
+	catch(e) {}
+}
+//add the opened window object into array for logoff
+function addWindowHistory(o)
+{
+	var iCount = 0;
+	var iCount2 = 0;
+	var blnExists = false;
+	var mainWindow
+	if(window.opener == null)
+		mainWindow = window;
+	else	
+		mainWindow = window.opener;
+	
+	while(true)
+	{
+		try
+		{
+			while(true)
+			{
+				if(mainWindow.windowList != null)
+				{
+					blnExists = true;
+					break;
+				}
+				mainWindow = mainWindow.parent;
+				iCount2++;
+				if(mainWindow == null || iCount2 > 7)
+					break;
+			}
+			
+			if(blnExists)
+				break;
+			mainWindow=mainWindow.opener;
+			iCount++;
+			if ( mainWindow==null || iCount > 7)
+				return;
+		}
+		catch(e)//Catch the Error when object is not set
+		{
+			return;
+		}
+	}
+	
+	if ( mainWindow.windowList[0]==null)
+	{
+		mainWindow.windowList[0]=o;
+		return;
+	}
+	blnExists = false;
+	for(var i=0;i<mainWindow.windowList.length ;i++)
+	{
+		if (mainWindow.windowList[i]==o)
+		{
+			blnExists=true;
+			break;
+		}
+	}	
+	if(!blnExists)
+	{
+		mainWindow.windowList[mainWindow.windowList.length]=o;
+	}
+}
+//close all windows already open on logoff
+function closeWindows()
+{
+	if(window.parent.windowList==null)
+		return;
+	for(var i=0;i<window.parent.windowList.length;i++)
+	{
+		if (window.parent.windowList[i]!=null)
+		{
+			var o=window.parent.windowList[i];
+			try
+			{
+				o.close();
+			}
+			catch(e){}
+		}
+	}
+	window.parent.windowList = null;
+}
+function checkForClosedWindows()
+{
+	for(var i=0;i<window.parent.windowList.length;i++)
+	{
+		if (window.parent.windowList[i]!=null)
+		{
+			var o=window.parent.windowList[i];
+			try
+			{
+				if (!o.closed)
+					return false;
+			}
+			catch(e){}
+		}
+	}
+	return true;
+}
+
+function openNonResizableWin(sPath, sName, iX, iY)
+{
+	if (!iX) iX = 750;
+	if (!iY) iY = 510;
+	//Added the code to Show the Popup at the Center of the Screen.
+	var screenWidth = window.screen.width;
+	var screenHeight = window.screen.height;
+	var width = (screenWidth - iX)/2;
+	var height = (screenHeight - iY)/2;
+	try
+	{
+		var o = window.open(sPath, sName, "width=" + iX + ",height=" + iY + ",status=1,resizable=0");
+		o.moveTo(width, height);
+		o.opener = window;
+		//keep track of opened window
+		addWindowHistory(o);
+	}
+	catch(e) {}
+}
+//For resizable window and also having scroll bar.
+function opnStdWin(sPath, sName, iX, iY)
+{
+	if (!iX) iX = 750;
+	if (!iY) iY = 510;
+	//Added the code to Show the Popup at the Center of the Screen.
+	var screenWidth = window.screen.width;
+	var screenHeight = window.screen.height;
+	var width = (screenWidth - iX)/2;
+	var height = (screenHeight - iY)/2;
+	try
+	{
+		var o = window.open(sPath, sName, "width=" + iX + ",height=" + iY + ",status=1,scrollbars=1,resizable=1");
+		//o.moveTo(width, height);
+		//keep track of opened window
+		addWindowHistory(o);
+	}
+	catch(e) {}
+}
+function openStdDlg(sPath, oArgs, iX, iY)
+{	
+	return window.showModalDialog(sPath, oArgs, "dialogWidth:" + iX + "px;dialogHeight:" + iY + "px;help:0;status:0;scroll:0;center:1");
+}
+function openResizableStdDlg(sPath, oArgs, iX, iY)
+{
+	return window.showModalDialog(sPath, oArgs, "dialogWidth:" + iX + "px;dialogHeight:" + iY + "px;help:0;status:0;scroll:0;center:1;resizable:1");
+}
+function openWinWithNoStatus(sPath, sName, iX, iY)
+{
+	if (!iX) iX = 750;
+	if (!iY) iY = 510;
+	//Added the code to Show the Popup at the Center of the Screen.
+	var screenWidth = window.screen.width;
+	var screenHeight = window.screen.height;
+	var width = (screenWidth - iX)/2;
+	var height = (screenHeight - iY)/2;
+	try
+	{
+		var o=window.open(sPath, sName, "width=" + iX + ",height=" + iY + ",status=0,scrollbars=1,resizable=1");
+		//keep track of opened window
+		addWindowHistory(o);
+	}
+	catch(e) {}
+}
+
+function openIsvWin(sPath, sPassParams, sMode, sParams)
+{
+	if (sPassParams == "1")
+	{
+		sPath += "?oType=" + adiFormSubmit.adiFormSubmitObjectType.value;
+		sPath += "&oId=" + adiFormSubmit.adiFormSubmitId.value;
+	}
+	switch (sMode)
+	{
+		case -1:	
+					loadArea(event.srcElement.id + "Area", "", sPath);	break;
+		case "1":	window.showModalDialog(sPath, null, sParams);		break;
+		case "2":	
+			var o=window.showModelessDialog(sPath, null, sParams);	
+			//keep track of opened window
+			addWindowHistory(o);
+			break;
+		default:	
+			var o=window.open(sPath, buildWinName(), sParams);		
+			//keep track of opened window
+			addWindowHistory(o);
+			break;
+	}
+}
+function openFrmObj( sUrl, sName,  iType )
+{
+	var url = _sRoot + getObjUrl(iType) + sUrl;
+	
+	switch ( Number(iType) )
+	{
+		case LeaveRequest:
+			url += "&viewtype=" + document.getElementById("viewtype").value;
+			openStdWin(url,sName,700,700);
+			break;
+		case EmployeeRole:
+			openStdWin( url, sName,850,600);
+			break;
+		case SecurityRole:
+			openStdWin( url, sName,850,600);
+			break;
+		case User:
+			openStdWin( url, sName,600,500);
+			break;
+		case PayType:
+			openStdWin( url, sName,800,680);
+			break;
+		case PayGroup:
+			top.Navigate(url);
+			break;
+		case PointsGroup:
+			top.Navigate(url);
+			break;
+		case InfractionType:
+			openStdWin( url, sName,600,500);
+			break;
+		case MasterSchedule:
+			openStdWin( url, sName,1000,600);
+			break;
+		case Schedule:
+			openStdWin( url, sName,900,650);
+			break;
+		case RotationSchedule:
+			openStdWin( url, sName, 600,500);
+			break;
+		case Employee:
+			openStdWin( url, sName,800,650);
+			break;
+		case Message:
+			openStdWin( url, sName,600,600);
+			break;
+		case TimeCard:
+			var o=window.open(url, "timecard", "width=950,height=690,status=1,resizable=1,scrollbars=1");
+			//keep track of opened window
+			addWindowHistory(o);			
+			//openStdWin( url, sName,950,680);
+			break;	
+		case Accrual:
+			// JMD - 4/14/2008
+			// Duplicated TimeCard window opening logic to address issue of TimeCard / Accrual window contention issue
+			//openStdWin(url, sName, 950, 600);
+			window.open(url, "accrual", "width=950,height=600,status=1,resizable=1,scrollbars=1");
+			break;			
+		case PremiumRule:
+			
+			openStdWin(url+"&ownergroup="+getOwnerGroupId(), sName, 850, 650);
+			break;	
+		case SystemLog:
+		case TimeEvent:
+			break;	
+		case PunchRoundRule:	
+		case InPunchRule:		
+		case OutPunchRule:		
+		case PunchSetRoundRule:	
+		case DailyTotalRoundRule:
+		case DayBreakRule:		
+		case NewDayStartRule:	
+		case PhantomScheduleRule:
+			openStdWin( url+"&roundruletype="+iType+"&ownergroup="+getOwnerGroupId(), sName,800,700);
+			break;
+		case HolidayRule:
+			openStdWin( url+"&ownergroup="+getOwnerGroupId(), sName,950,450);
+			break;	
+		case AutoExemptRule:
+		case CallInRule:
+		case OnCallRule:
+		case GuaranteeRule:
+		case DailyGuaranteeRule:
+		case WeeklyGuaranteeRule:
+		case PayPeriodGuaranteeRule:
+			openStdWin( url+"&guaranteeruletype="+iType+"&ownergroup="+getOwnerGroupId(), sName,800,700);
+			break;
+		case TimeCardUDF:
+			openStdWin( url, sName,600,500);
+			break;
+		case BreakRule:
+			openStdWin( url+"&ownergroup="+getOwnerGroupId(), sName,800,600);
+			break;
+		case Daily:
+		case Weekly:
+		case PayPeriod:
+		case CustomPeriod:
+		case ConsecutiveDays:
+		case NonConsecutiveDays:
+		case UnScheduledDays:
+			openStdWin( url+"&overtimeruletype="+iType+"&ownergroup="+getOwnerGroupId(), sName,800,700);
+			break;
+		case AccrualGroup:
+			top.Navigate(url);
+			break;
+		case AccruedRule:
+			openStdWin( url+"&ownergroup="+getOwnerGroupId(), sName,750,600);
+			break;
+		case ProxyUser:
+			openStdWin( url, sName,550,400);
+			break;
+		case EarnedRule:
+			openStdWin( url+"&ownergroup="+getOwnerGroupId(), sName,700,600);
+			break;
+		case CarryOverRule:
+			openStdWin( url+"&ownergroup="+getOwnerGroupId(), sName,700,600);
+			break;
+		case ThresholdRule:
+			openStdWin( url+"&ownergroup="+getOwnerGroupId(), sName,700,600);
+			break;
+		case WorkFlowNotification :
+		case TaskScheduleReports :
+		case TaskScheduleBuildSchedules :
+		case TaskScheduleJobs :
+		case TaskScheduleExecutable :
+		case TaskScheduleRecalc :
+		case TaskScheduleAbsences :
+		case TaskScheduleWFNDelete :
+			openStdWin( url+"&tasktype=10",sName,750,550);
+			break;
+		case TaskScheduleBackup :
+			openStdWin( url+"&tasktype=13",sName,750,550);
+			break;
+		case TaskScheduleCommunication:
+			openStdWin( url, sName,750,550);
+			break;
+		case TaskScheduleImportExport:
+			openStdWin( url, sName,750,655);
+			break;
+		case PointsRuleAction :
+			openStdWin(url+"&ownergroup="+getOwnerGroupId(), sName,700,400);
+			break;
+		case AccrualType :
+			openStdWin( url, sName,900,550);
+			break;		
+		case Point :
+			openStdWin( url, sName,800,550);
+			break;	
+		case Notification:
+			url += "&employeeId=" + document.getElementById("employeekey").value + "&loadFromDb=" + document.getElementById("loadFromDB").value;
+			openStdWin(url,sName,500,450);
+			break;
+		case Infraction	:
+			url += "&employeeId=" + document.getElementById("employeekey").value + "&loadFromDb=" + document.getElementById("loadFromDB").value  + "&payperiodstartdate=" + document.getElementById("payPeriodStartDate").value + "&payperiodenddate=" + document.getElementById("payPeriodEndDate").value;
+			openStdWin(url,sName,600,600);	
+			break;
+		case ChargeToRule:
+			url += "&pointsruletype=4701";
+			openStdWin(url+"&ownergroup="+getOwnerGroupId(),sName,800,550);
+			break;
+		case CreditToRule:
+			url += "&pointsruletype=4702";
+			openStdWin(url+"&ownergroup="+getOwnerGroupId(),sName,800,550);
+			break;
+		case PointExpirationRule:
+			url += "&pointsruletype=4703";
+			openStdWin(url+"&ownergroup="+getOwnerGroupId(),sName,800,550);
+			break;		
+		case NotificationExpirationRule:
+			openStdWin(url +"&ownergroup="+getOwnerGroupId(),sName,600,500);
+			break;
+		case Site:
+			openStdWin(url, sName, 825, 550);
+			break;
+		case Clock:
+			openStdWin(url+"&ownergroup="+getOwnerGroupId(), sName, 550, 350);
+			break;
+		case FunctionKey:
+			openStdWin(url+"&ownergroup="+getParentId(), sName, 750, 500);
+			break;
+		case FunctionKeyTemplate:
+			openStdWin(url, sName, 770, 530);
+			break;
+		case BellSchedule:
+			openStdWin(url, sName,800,550);
+			break;
+	
+		default:
+			openStdWin( url, sName);
+	}
+}
+
+function getOwnerGroupId()
+{
+	var sUrl = window.parent.window.document.location.href;
+	var indexOfId = sUrl.indexOf("id=");
+	var indexOfNextArgument = sUrl.substring(indexOfId).indexOf("&");
+	var sOwnerId ="";
+	if(indexOfNextArgument == -1)
+	{
+		sOwnerId = sUrl.substring(indexOfId+3);
+	}
+	else
+	{
+		sOwnerId = sUrl.substring(indexOfId+3,indexOfId+indexOfNextArgument);
+	}
+	return sOwnerId;
+}
+
+//This method is called for the getting parentId(i.e. FunctionKeyTemplateKey for Function
+function getParentId()
+{
+	return window.parent.ParentId;
+}
+
+function openObj(iType, sId)
+{
+	var sUrl = "";
+	if (sId)
+	{
+		sUrl += "?id=" + sId;
+	}
+	openFrmObj( sUrl, buildWinName(sId),  iType );
+}
+function openObjEx( iType, iParentType, sParentId, sParams )
+{
+	var url = "";
+	if (sParentId)
+	{
+		url += "?pId=" + sParentId + "&pType=" + iParentType;
+	}
+	if ( typeof(sParams) != "undefined" )
+	{
+		url += sParams;
+	}
+	openFrmObj( url, buildWinName(),  iType );
+}
+function getObjUrl(i)
+{
+	switch ( Number(i))
+	{
+		case AccrualGroup:						return "Rules/AccrualGroup.aspx";
+		case AccrualType:						return "Rules/AccrualType.aspx";
+		case Country :							return "UserParameters/CountryCode.aspx";
+		case Employee :							return "Profile/EmployeeProfile.aspx";
+		case EmployeeStatus :					return "UserParameters/EmployeeStatusCode.aspx";
+		case Exception :						return "UserParameters/ExceptionCode.aspx";				
+		case Job :								return "UserParameters/JobCode.aspx";
+		case Holiday :							return "Rules/Holiday.aspx";
+		case LeaveRequest:						//Get the usertype and append it to query string
+												return "LeaveRequest/LeaveRequest.aspx";
+		case Message :							return "Maintenance/Message.aspx";
+		case PayCalendar :						return "Rules/PayCalendar.aspx";
+		case PayGroup :							return "Rules/PayGroup.aspx";		
+		case PayType :							return "Rules/PayType.aspx";		
+		case RaceCode :							return "UserParameters/RaceCode.aspx";		
+		case EmployeeRole :						return "Administration/EmployeeSecurityRole.aspx";
+		case SecurityRole :						return "Administration/SecurityRole.aspx";
+		case RoundingTable :					return "Rules/RoundingTable.aspx";
+		case Rule :								return "Activities/Fax/edit.aspx";
+		case Schedule :							return "Schedule/EmployeeSchedule.aspx";
+		case Setting :							return "Activities/Phone/edit.aspx";
+		case Shift :							return "Rules/Shifts.aspx";
+		case StateMaster :						return "UserParameters/StateMaster.aspx";
+		case TerminationReason :				return "UserParameters/TerminationReasonCode.aspx";		
+		case TimeEditReason :					return "UserParameters/TimeEditReasonCode.aspx";
+		case TimeOffReason :					return "UserParameters/TimeOffReasonCode.aspx";
+		case User:								return "Administration/UserManager.aspx";
+		case Accrual:							return "Accruals/AccrualDetails.aspx";
+		case Company :							return "UserParameters/Company.aspx";
+		case Division :							return "UserParameters/Division.aspx";
+		case Department :						return "UserParameters/Department.aspx";
+		case Location :							return "UserParameters/Location.aspx";
+		case Position :							return "UserParameters/Position.aspx";
+		case MasterSchedule :					return "Schedule/MasterSchedule.aspx";
+		case RotationSchedule : 				return "Schedule/RotationSchedule.aspx";
+		case GuaranteeRule:						return "Rules/GuaranteeRule.aspx";
+		case DailyGuaranteeRule:				return "Rules/GuaranteeRule.aspx";
+		case WeeklyGuaranteeRule:				return "Rules/GuaranteeRule.aspx";
+		case PayPeriodGuaranteeRule:			return "Rules/GuaranteeRule.aspx";
+		case AutoExemptRule:					return "Rules/AutoExemptRule.aspx";
+		case CallInRule:						return "Rules/CallInRule.aspx";
+		case OnCallRule:						return "Rules/OnCallRule.aspx";
+		case TimeCard:							return "Timecard/CommonTimecard.aspx";
+		case HolidayRule :						return "Rules/HolidayRule.aspx"
+		case MiscellaneousRule :
+		case OverTimeRule :                     return "Rules/OverTimeRule.aspx";
+		case RoundingRule :						return "Rules/dlg_RoundingRuleType.aspx";
+		case SystemSetting :					return "";  
+		case ScheduleandLeaveRequestSetting  :	return "";  
+		case TimeCardUDF :						return "UserParameters/UserDefinedTimeFields.aspx";
+		case PunchRoundRule:					return "Rules/OtherRoundRule.aspx";
+		case InPunchRule:						return "Rules/RoundingRule.aspx";
+		case OutPunchRule:						return "Rules/RoundingRule.aspx";
+		case PunchSetRoundRule:					return "Rules/OtherRoundRule.aspx";
+		case DailyTotalRoundRule:				return "Rules/OtherRoundRule.aspx";
+		case DayBreakRule:						return "Rules/OtherRoundRule.aspx";
+		case NewDayStartRule:					return "Rules/OtherRoundRule.aspx";
+		case PhantomScheduleRule:				return "Rules/OtherRoundRule.aspx";
+		case BreakRule:							return "Rules/MealBreaks.aspx";
+		case PremiumRule:						return "Rules/PremiumRule.aspx";
+		case Daily:								return "Rules/OverTimeRule.aspx";
+		case Weekly:							return "Rules/OverTimeRule.aspx";
+		case PayPeriod:							return "Rules/OverTimeRule.aspx";
+		case CustomPeriod:						return "Rules/OverTimeRule.aspx";
+		case ConsecutiveDays:					return "Rules/OverTimeRule.aspx";
+		case NonConsecutiveDays:				return "Rules/OverTimeRule.aspx";
+		case UnScheduledDays:					return "Rules/OverTimeRule.aspx";
+		case AccruedRule:						return "Rules/AccruedRule.aspx";
+		case EarnedRule:						return "Rules/EarnedRule.aspx";	
+		case CarryOverRule:						return "Rules/CarryOverRule.aspx";
+		case ThresholdRule:                     return "Rules/ThresholdRule.aspx";
+		case TaskScheduleReports :				return "Maintenance/ReportDistribution.aspx";
+		case TaskScheduleBuildSchedules :		return "Maintenance/BuildSchedule.aspx";
+		case TaskScheduleJobs :					return "Maintenance/ScheduleJobs.aspx";
+		case TaskScheduleExecutable :			return "Maintenance/ScheduleOtherExe.aspx";
+		case TaskScheduleRecalc :				return "Maintenance/RecalcTimeCards.aspx";
+		case TaskScheduleAbsences :				return "Maintenance/CheckAbsences.aspx";
+		case TaskScheduleWFNDelete :			return "Maintenance/WFNEventDelete.aspx";
+		case TaskScheduleBackup :				return "Maintenance/WFNEventDelete.aspx";
+		case TaskScheduleImportExport :			return "Maintenance/ImportExportTask.aspx";
+		case TaskScheduleCommunication:			return "Maintenance/ClockTask.aspx";
+		case InfractionType :					return "Rules/InfractionType.aspx";	
+		case PointsGroup	:					return "Rules/PointsGroup.aspx";
+		case Point			:					return "Points/PointDetailsGrid.aspx";
+		case Notification   :					return "Notifications/Notification.aspx";
+		case NotificationRule :					return "Rules/NotificationRule.aspx";
+		case NotificationTrigger :				return "Rules/NotifTriggersRules.aspx";
+		case NotificationExpirationRule :       return "Rules/ExpiredNotifRules.aspx";
+		case Infraction		:					return "Points/Point.aspx";
+		case WorkFlowNotification :				return "WorkFlowNotif/WorkFlowNotification.aspx";
+		case ChargeToRule :						
+		case CreditToRule :						
+		case PointExpirationRule :				return "Rules/PointsRule.aspx";
+		case PointsRuleAction :					return "Rules/PointsRuleAction.aspx";
+		case SystemLog:							return;
+		case FunctionKey:						return "Clocks/ClockFunction.aspx";
+		case Site:								return "Clocks/ClockConfiguration.aspx";
+		case Clock:								return "Clocks/NewClocks.aspx";
+		case FunctionKeyTemplate:				return "Clocks/FunctionKeyTemplate.aspx";
+		case BellSchedule:						return "Clocks/BellSchedule.aspx";
+		case ProxyUser:							return "Timecard/SupervisorProxy.aspx";
+		case TimeEvent:							return "";
+	}
+	alert(i + " - Is not a recognized Object type");
+	return "";
+}
+function openPopup()
+{
+	return window.createPopup();
+}
+function buildWinName(s)
+{
+	if (s) return s.replace(/[-\{\}]/g, "");
+	var d = new Date();
+	return d.getTime();
+}
+var ERROR_STOP = 0;
+var ERROR_NONE = 1;
+var ERROR_CONTINUE = 2;
+function handleXMLErr(xml, bContinue)
+{
+	if (bContinue == null) bContinue = false;
+	if (xml.parseError.errorCode != 0)
+	{
+		if(xml.xml == "")
+		{
+			alert("Your session has expired, please close all windows and Login again");
+			return ERROR_STOP;
+		}
+
+		alert("XML Parser Error: " + xml.parseError.reason);
+		if (!bContinue)
+		{
+			return ERROR_STOP;
+		}
+		else
+		{
+			return ERROR_CONTINUE;
+		}
+	}
+	var node = xml.selectSingleNode("/error");
+	if (node)
+	{
+		if (!bContinue)
+		{
+			openStdDlg("../_common/error/dlg_error.aspx?hresult=" + node.selectSingleNode("number").text, null, 400, 200);
+			return ERROR_STOP;
+		}
+		else
+		{
+			return ERROR_CONTINUE;
+		}
+	}
+	return ERROR_NONE;
+}
+
+
+
+function loadHelp(sArea, iUserType)
+{
+	var x = 0;
+	var y = 0;
+	var sFileName = '';
+	var sContextString = '';
+	var sBasePath = '';
+	var iWidth = 285;
+	//Right align logic not used right now
+	/*if ((top.screenLeft + top.document.body.clientWidth) < (top.screen.width - 250))
+	{
+		x = top.screenLeft + top.document.body.clientWidth + 3;
+	}
+	else
+	{
+		x = top.screen.width - 300;
+	}
+	
+	
+	if (sArea)
+	{
+		x -= 280;
+	}
+	if ((top.screenTop + top.document.body.clientHeight) < top.screen.height)
+	{
+		y = top.screenTop - 23;
+	}
+	else
+	{
+		y = top.screen.height - 450;
+	}*/
+	var iX = 750;
+	var iY = 650;
+	if(window.opener)
+	{
+		try
+		{
+			iUserType = window.opener.top.header._userType;
+		}
+		catch(e)
+		{
+		}
+	}
+	//Added the code to Show the Popup at the Center of the Screen.
+	var screenWidth = window.screen.width;
+	var screenHeight = window.screen.height;
+	var newPage = false;
+	x = (screenWidth - iX)/2;
+	y = (screenHeight - iY)/2;
+	//x = 125;
+	//y = 50;
+	if (sArea)
+	{
+		var s = sArea;
+		iWidth = 565;
+		sFileName = sArea;
+		sBasePath = "help/";
+	}
+	else
+	{
+		var s = window.location.pathname;
+		if(window.location.href.indexOf("?id=") == -1)
+		{
+			newPage = true;
+		}
+		sFileName = s.substring(s.lastIndexOf('/') + 1 );
+		sBasePath = "../help/";
+	}
+
+	switch (sFileName.toLowerCase())
+	{
+		// Filter 
+		case "filtercriteria.aspx" : 
+			sContextString = "Filter-Settings";
+			break;
+		
+		// Configurations/Rules
+		case "rules" :
+			sContextString = "Configurations\\Rules\\Rules-rules";
+			break;
+		case "shifts" :
+		case "shifts.aspx" : 
+			sContextString = "Configurations\\Rules\\Rules-shifts";
+			break;
+		case "pay types" :
+		case "paytype.aspx" : 
+			sContextString = "Configurations\\Rules\\Rules-pay-types";
+			break;
+		case "pay calendar" :
+		case "paycalendar.aspx" : 
+			sContextString = "Configurations\\Rules\\Rules-pay-calendar";
+			break;
+		case "rounding table" :
+		case "roundingtable.aspx" : 
+			sContextString = "Configurations\\Rules\\Rules-rounding-table";
+			break;
+		case "holiday settings" :
+		case "holiday.aspx" : 
+			sContextString = "Configurations\\Rules\\Rules-holiday-settings";
+			break;
+		case "pay groups" :
+		case "paygroup.aspx" : 
+			sContextString = "Configurations\\Rules\\Rules-pay-groups";
+			break;
+			// Accrual 
+		case "accruals" :
+			sContextString = "Configurations\\Rules\\Rules-accruals";
+			break;
+		case "accrual group" :
+		case "accrualgroup.aspx" : 
+		case "accruedrule.aspx" :
+		case "earnedrule.aspx" :
+		case "carryoverrule.aspx" :
+		case "thresholdrule.aspx" :
+			sContextString = "Configurations\\Rules\\Rules-accrual-group";
+			break;
+		case "accrual type" :
+		case "accrualtype.aspx" : 
+			sContextString = "Configurations\\Rules\\Rules-accrual-type";
+			break;
+			// Points
+		case "points" :
+			sContextString = "Configurations\\Rules\\Rules-points";
+			break;
+		case "points group" :
+		case "pointsgroup.aspx" : 
+		case "pointsrule.aspx" :
+		case "notificationrule.aspx" :
+		case "notiftriggersrules.aspx" :
+		case "expirednotifrules.aspx" :
+		case "pointsruleaction.aspx" :
+			sContextString = "Configurations\\Rules\\Rules-points_group";
+			break;
+		case "infraction type" :
+		case "infractiontype.aspx" : 
+			sContextString = "Configurations\\Rules\\Rules-infraction-type";
+			break;
+			// Pay Group Rules
+		case "roundingrule.aspx" :
+		case "otherroundrule.aspx" :
+			sContextString = "Configurations\\Rules\\Rules-rounding";
+			break;
+		case "mealbreaks.aspx" :
+			sContextString = "Configurations\\Rules\\Rules-break";
+			break;
+		case "callinrule.aspx" :
+		case "oncallrule.aspx" :
+		case "autoexemptrule.aspx" :
+		case "guaranteerule.aspx" :
+			sContextString = "Configurations\\Rules\\Rules-guarantee";
+			break;
+		case "overtimerule.aspx" :
+			sContextString = "Configurations\\Rules\\Rules-overtime-rule";
+			break;
+		case "holidayrule.aspx" :
+			sContextString = "Configurations\\Rules\\Rules-holiday";
+			break;
+		case "premiumrule.aspx" : 
+			sContextString = "Configurations\\Rules\\Rules-premium";
+			break;
+		//Configuration/Settings
+		case "settings" :
+			sContextString = "Configurations\\Settings\\Settings";
+			break;
+		case "system settings" :
+			sContextString = "Configurations\\Settings\\System-settings";
+			break;
+		case "miscentryrestrictionsettings.aspx" :
+			sContextString = "Configurations\\Rules\\Rules-pay-types";
+			break;
+		case "schedule and leave request settings" :
+		    sContextString = "Configurations\\Settings\\Schedule-leave-request-settings";
+			break;
+		//Configuration/UserParameters
+		case "userparameters" :
+			sContextString = "Configurations\\UserParameters\\User-Parameters";
+			break;
+		case "hierarchy" :
+		    sContextString = "Configurations\\UserParameters\\Hierarchy\\UserParameters-hierarchy";
+			break;
+		case "hierarchy manager" :
+		case "company.aspx" :
+		case "department.aspx" :
+		case "division.aspx" :
+		case "location.aspx" :
+		case "position.aspx" :
+		    sContextString = "Configurations\\UserParameters\\HierarchyManager\\HierarchyManager-main";
+			break;
+		case "codes" :
+			sContextString = "Configurations\\UserParameters\\Codes\\Codes";
+			break;
+		case "user defined fields" :
+			sContextString = "Configurations\\UserParameters\\UDF\\UDF-main";
+			break;
+			//Codes
+		case "time off reason codes" :
+		case "timeoffreasoncode.aspx" :
+			sContextString = "Configurations\\UserParameters\\Codes\\UserParameters-timeoff-reason";
+			break;
+		case "time edit reason codes" :
+		case "timeeditreasoncode.aspx" :
+			sContextString = "Configurations\\UserParameters\\Codes\\UserParameters-timeedit-reason";
+			break;
+		case "exception codes" :
+		case "exceptioncode.aspx" :
+			sContextString = "Configurations\\UserParameters\\Codes\\UserParameters-exception";
+			break;
+		case "job codes" :
+		case "jobcode.aspx" :
+			sContextString = "Configurations\\UserParameters\\Codes\\UserParameters-job";
+			break;
+		case "employee status codes" :
+		case "employeestatuscode.aspx" :
+			sContextString = "Configurations\\UserParameters\\Codes\\UserParameters-emp-status";
+			break;
+		case "termination reason codes" :
+		case "terminationreasoncode.aspx" :
+			sContextString = "Configurations\\UserParameters\\Codes\\UserParameters-termination";
+			break;
+		case "race codes" :
+		case "racecode.aspx" :
+			sContextString = "Configurations\\UserParameters\\Codes\\UserParameters-race";
+			break;
+		case "country codes" :
+		case "countrycode.aspx" :
+			sContextString = "Configurations\\UserParameters\\Codes\\UserParameters-country";
+			break;
+		case "state master" :
+		case "statemaster.aspx" :
+			sContextString = "Configurations\\UserParameters\\Codes\\UserParameters-state-master";
+			break;
+			//User Defined Fields
+		case "user defined employee fields" :
+			sContextString = "Configurations\\UserParameters\\UDF\\UDF-employee";
+			break;
+		case "user defined time fields" :
+		case "userdefinedtimefields.aspx" :
+			sContextString = "Configurations\\UserParameters\\UDF\\UDF-timeCard";
+			break;
+		
+		//Configurations/Maintenance
+		case "maintenance" :
+			sContextString = "Configurations\\Maintenance\\Maintenance";
+			break;
+		case "task scheduler" :
+		case "buildschedule.aspx" :
+		case "recalctimecards.aspx" :
+		case "reportdistribution.aspx" :
+		case "scheduleotherexe.aspx" : 
+		case "checkabsences.aspx" :
+		case "importexporttask.aspx" :
+		case "clocktask.aspx" :
+		case "wfneventdelete.aspx" :
+			if(newPage)
+				sContextString ="Configurations\\Maintenance\\TaskScheduler\\TaskScheduler-creating";
+			else
+				sContextString = "Configurations\\Maintenance\\TaskScheduler\\TaskScheduler-main";
+			break;
+		case "messages" :
+		case "message.aspx" :
+			sContextString = "Configurations\\Maintenance\\Messages\\Messages";
+			break;
+		case "workflow notifications - Organizational Configuration" :
+			sContextString = "Configurations\\Maintenance\\WFN\\WFN-organizational-configuration";
+			break;
+		//Configurations/Adminsitration
+		case "administration" :
+			sContextString = "Configurations\\Administration\\Administration";
+			break;
+		case "security role" :
+		case "securityrole.aspx" :
+		case "employeesecurityrole.aspx" :
+			sContextString = "Configurations\\Administration\\SecurityRole\\Security-role";
+			break;
+		case "user manager" :
+		case "usermanager.aspx" :
+			sContextString = "Configurations\\Administration\\UserManager\\UserManager";
+			break;
+		case "style sheet" :
+			sContextString = "Configurations\\Administration\\Style-sheet";
+			break;
+		case "licensing" :
+			sContextString = "Configurations\\Administration\\Licensing";
+			break;
+		case "licenseactivation.aspx":
+			sContextString = "LicenseActivation";
+			break;
+		case "login.aspx":
+			sContextString = "Login";
+			break;								
+		case "system information":
+			sContextString = "Configurations\\Administration\\SystemInformation";
+			break;
+		//Configurations/Workflow_Notification 
+		case "workflownotification.aspx" :
+			if(window.name.indexOf('org') != -1)
+			{
+				sContextString = "Configurations\\Maintenance\\WFN\\WFN-organizational-configuration";
+			}
+			else
+			{
+				sContextString = "Configurations\\WFN\\Workflow-notification";
+			}
+			break;
+		case "workflow notifications - organizational configuration" :
+		    sContextString = "Configurations\\Maintenance\\WFN\\WFN-organizational-configuration";
+			break;
+		case "workflownotifications" :
+			sContextString = "Configurations\\WFN\\Workflow-notification";
+			break;
+			
+		
+		// Supervisor Home	
+		case "supervisorhome.aspx" :
+			sContextString = "Supervisor-Home";
+			break;
+		//Reports
+		case "reports" :
+			sContextString = "Reports\\Reports";
+			break;
+		//Messages
+		case "messageslist" :
+			sContextString = "Messages\\Messages-managing";
+			break;
+		//Tools
+		case "tools" :
+			sContextString = "Tools\\Tools-main";
+			break;
+		case "import" :
+			sContextString = "Tools\\Tools-import";
+			break;
+		case "manage templates":
+			sContextString = "Tools\\Tools-manage-templates";
+			break;
+		case "export" :
+			sContextString = "Tools\\Tools-export";
+			break;
+		case "system log" :
+			sContextString = "Tools\\Tools-system-log";
+			break;
+		// Time Card
+		case "inouttimecard.aspx" :
+		case "bulktimecard.aspx" :
+		case "timecard" :
+				sContextString = "Timecard\\Timecard";
+			break;
+		case "supervisorproxy.aspx" :
+				sContextString = "Timecard\\Timecard-configure-proxy";
+			break;
+		case "adjustment.aspx" :
+		case "priorperiodadjustment.aspx" :
+				sContextString = "Timecard\\Timecard-prior-period-adjustments";
+				break;
+		case "timecardreallocation.aspx" :
+				sContextString = "Timecard\\Timecard-reallocation";
+				break;
+		case "browseexceptions" :
+			sContextString = "Timecard\\Timecard-browse-exceptions";
+			break;
+		case "browseapprovals" :
+			sContextString = "Timecard\\Timecard-browse-approvals";
+			break;
+		case "globalapproval" :
+		case "globaltimecardapproval.aspx" :
+			sContextString = "Timecard\\Timecard-global-approval";
+			break;
+		case "globalrecalc" :
+		case "globalrecalculate.aspx" :
+			sContextString = "Timecard\\Timecard-global-recalc";
+			break;
+		case "globalpunching" :
+		case "globalpunching.aspx" :
+			sContextString = "Timecard\\Timecard-global-punch";
+			break;
+		case "globalmiscpay" :
+		case "globalmiscadjustment.aspx":
+			sContextString = "Timecard\\Timecard-global-misc-pay";
+			break;
+		case "miscellaneouspay.aspx" :
+			sContextString = "Timecard\\Timecard-edit-misc-pay";
+			break;
+		//Profile
+		case "employeeprofile.aspx" :
+		case "profile" :
+			
+				sContextString = "Profile\\Profile";
+			
+			break;
+		case "employeeusermanager.aspx" :
+				sContextString = "Profile\\Profile-security-access";
+			break;
+			
+		// Schedule
+		case "employeeschedule.aspx" :
+		case "schedule" :
+			
+				sContextString = "Schedule\\Schedule-main";
+			
+			break;
+		case "schedulebyhierarchy" :
+		case "schedulebydepartment.aspx" :
+			sContextString = "Schedule\\Schedule-schedule-by-hierarchy";
+			break;
+		case "copyschedule" :
+			sContextString = "Schedule\\Schedule-copy";
+			break;
+		case "schedulebudget" :
+			sContextString = "Schedule\\Schedule-schedule-budget";
+			break;
+		case "masterschedule" :
+		case "masterschedule.aspx" :
+			sContextString = "Schedule\\Master-schedule-list";
+			break;
+		case "rotationschedule" :
+		case "rotationschedule.aspx" :
+			sContextString = "Schedule\\Rotation-schedule-list";
+			break;
+		case "swapschedule" :
+		case "swapschedule.aspx" :
+			sContextString = "Schedule\\Schedule-schedule-swap";
+			break;
+		// Accruals
+		case "accrualslist" :
+		case "accrualdetails.aspx" :
+		case "accrualtransaction.aspx" :
+			sContextString = "Accruals\\Accruals-main";
+			break;
+		case "globalallotment" :
+		case "globalallotment.aspx" :
+			sContextString = "Accruals\\Accruals-global-allotment";
+			break;
+		/*case "Accrual.aspx" :
+			sContextString = "";
+			break;*/
+		//Points
+		case "pointslist" :
+			sContextString = "Points\\Points-main";
+			break;
+		case "pointdetailsgrid.aspx" :
+			sContextString = "Points\\Points-infractions";
+			break;
+		
+		case "notificationdetailsgrid.aspx" :
+			sContextString = "Points\\Points-notification-query";
+			break;
+		//Leave request
+		case "leaverequest" :
+		case "leaverequest.aspx" :
+			if(iUserType == 1 )
+			{
+				sContextString = "LeaveRequest\\LeaveRequest-sup";
+			}
+			else
+			{
+				sContextString = "LeaveRequest\\LeaveRequest-emp";
+			}
+			break;
+		case "leaverequestmonth" :
+			if(iUserType == 1 )
+			{
+				sContextString = "LeaveRequest\\LeaveRequest-sup-month-view-dept";
+			}
+			else
+			{
+				sContextString = "LeaveRequest\\LeaveRequest-emp-month";
+			}
+			break;
+		case "leaverequestweek" :
+			if(iUserType == 1 )
+			{
+				sContextString = "LeaveRequest\\LeaveRequest-supervisor-by-week-view";
+			}
+			else
+			{
+				sContextString = "LeaveRequest\\LeaveRequest-emp-week-view";
+			}
+			break;
+		//Payroll
+		case "payroll" :
+			sContextString = "Payroll\\Payroll-main";
+			break;
+		case "payrollinterface.aspx" :
+
+		    sContextString = "Payroll\\Payroll-interfaces";
+			break;
+		//CONTENTS
+		case "contents" :
+			sBasePath = "../help/";
+			sContextString = "ADI_Web";
+			break;
+		case "aboutus" :
+			window.open( "../aboutus/aboutus.aspx","MSADIAboutUs","status=0,resizable=0,scrollbars=0,width=430,height=400");
+			sContextString = '#';
+			break;
+		case "clockwizard.aspx":
+		case "allocationtable.aspx":
+		case "clockcommunication.aspx":
+		case "clockconfiguration.aspx":
+		case "clocksettings.aspx":
+		case "departmentselect.aspx":
+		case "employeeselect.aspx":
+		case "addclocks.aspx":
+		case "newclocks.aspx":
+		case "clock sites":
+			sContextString = 'Configurations\\Administration\\Clocks\\Clocks-sites';
+			break;
+		case "time clock":
+			sContextString = 'Configurations\\Administration\\Clocks\\Clocks';
+			break;
+		case "clockfunction.aspx":
+		case "dlg_functionkeytemplate.aspx":
+		case "functionkeytemplate.aspx":
+		case "function key templates":
+			sContextString = 'Configurations\\Administration\\Clocks\\Clocks-function-key-templates';
+			break;
+		case "bell schedules":
+		case "bellschedule.aspx":
+			sContextString = 'Configurations\\Administration\\Clocks\\Clocks-bell-schedules';
+			break;
+		case "communicationmodule.aspx":
+		case "errorstatus.aspx":
+		case "getmessages.aspx":
+		case "processselection.aspx":
+		case "clock comm":
+			sContextString = 'Clocks-Communication-Module';
+			break;
+		case "editmiscpay.aspx":
+			sContextString = 'Timecard/Timecard-edit-misc-pay';
+			break;
+	}
+	
+	var iY = top.document.body.clientHeight - 5;
+	if (iY < 300)
+	{
+		iY = 300;
+	}
+	if(sContextString != null && sContextString != '' && sContextString != '#' )
+	{
+		window.open( sBasePath + sContextString + ".htm","MSADIHelp","resizable=1,scrollbars=1,width=750,height=650");
+	}
+	else if(sContextString != '#')
+	{
+			alert('Help has not been integrated for this page yet.');
+	}
+}
+function IsActivityTypeCode(iObjTypeCode)
+{
+	switch (parseInt(iObjTypeCode,10))
+	{
+		case EmailActivity:
+		case FaxActivity:
+		case PhoneCallActivity:
+		case LetterActivity:
+		case AppointmentActivity:
+		case Activity:
+		case IncidentResolutionActivity:
+		case OpportunityCloseActivity:
+		case OrderCloseActivity:
+		case QuoteCloseActivity:
+			return true;
+		default: return false;
+	}
+}
+function auto(iObjectTypeCode)
+{
+	if(iObjectTypeCode != TimeCard && iObjectTypeCode != Schedule)
+	{
+		for (var i = 0; i < document.frames.length; i++)
+		{
+			var o = document.frames[i].frameElement;
+			if (o.className == "grid")
+			{
+				o.Refresh();
+			}
+			else if (o.isArea)
+			{
+				
+				for (var ii = 0; ii < document.frames[i].frames.length; ii++)
+				{
+					o = document.frames[i].frames[ii].frameElement;
+					if (o.className == "grid")
+					{
+						o.Refresh();
+					}
+				}
+			}
+		}
+	}	
+}
+function HtmlEncode(s)
+{
+	s = s.replace(/&/g, "&amp;");
+	s = s.replace(/</g, "&lt;");
+	s = s.replace(/>/g, "&gt;");
+	return s.replace(/\"/g, "&quot;");
+}
+function decodeXml(s)
+{
+	
+	try
+	{
+		s = eval('"' + s.replace(/&#x(\w\w\w\w);/g, "\\u$1").replace(/"/g, '\\"') + '"');
+	}
+	catch (e) {;}
+	
+	s = s.replace(/&amp;/g, "&");
+	s = s.replace(/&lt;/g, "<");
+	s = s.replace(/&gt;/g, ">");
+	s = s.replace(/&apos;/g, "'");
+	s = s.replace(/&quot;/g, "\"");
+	s = s.replace(/&#x25;/g, "%");
+	return s;
+}
+function URLEncode(s)
+{
+	s = s.replace(" ", "%20");
+	s = s.replace("\"", "%22");
+	s = s.replace("#", "%23");
+	s = s.replace("&", "%26");
+	return s.replace("+", "%2B");
+}
+
+//Logic writen for Redirecting back to Login page from current page in case of session time out/ multiple login.
+function RedirectToLogin(flag)
+{
+	try
+	{
+	if(window.self.opener)
+	{
+		window.opener.RedirectToLogin(flag);		
+	}
+	else if(window.dialogArguments)
+	{
+		try
+		{
+			window.dialogArguments.window.RedirectToLogin(flag);
+		}
+		catch(e)
+		{
+			if(flag)
+			{
+				window.self.location = "../Security/login.aspx";
+			}
+			else
+			{
+				window.self.close();
+			}
+		}
+	}
+	else
+	{
+		window.self.location = "../Security/login.aspx";
+	}
+	}
+	catch(e)
+	{
+		window.self.location = "../Security/login.aspx";
+	}
+	//window.self.close();
+}
+
+
+function PageQuery()
+{
+	var q = document.location.search;
+	if(q.length > 1)
+	{
+			this.q = q.substring(1, q.length);
+	}
+	else
+	{
+			this.q = null;
+	}
+	this.keyValuePairs = new Array();
+	if(q)
+	{
+		for(var i=0; i < this.q.split("&").length; i++) 
+		{
+			this.keyValuePairs[i] = this.q.split("&")[i];
+		}	
+	}
+}
+	
+function getQueryStringValue(s) 
+{
+	try
+	{
+		PageQuery();
+		for(var j=0; j < this.keyValuePairs.length; j++)
+		{
+			if(this.keyValuePairs[j].split("=")[0] == s)
+			return this.keyValuePairs[j].split("=")[1];
+		}
+		return false;
+	}
+	catch(e)
+	{
+		return false;
+	}
+}
+var Url = "";
+var ruleType = "";
+function openDialog(url,type)
+{	
+	Url = url;
+	ruleType = type;
+	window.setTimeout("openTypeDialog()",2000)
+}
+/*
+function to open dialog in rules,where on 'Save And New' the choice dialog box is to be opened
+*/
+function openTypeDialog()
+{	
+	switch (ruleType)
+	{
+		case RoundingRule:
+			openStdDlg(Url,self,400,380);
+			break;
+	}
+}
+
+/*
+This function returns the height of the window area available to be written to
+by the browser.
+*/
+function browserWindowHeight() {
+  var myHeight = 0;
+  if( typeof( window.innerWidth ) == 'number' ) {
+    //Non-IE
+    myHeight = window.innerHeight;
+  } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+    //IE 6+ in 'standards compliant mode'
+    myHeight = document.documentElement.clientHeight;
+  } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+    //IE 4 compatible
+    myHeight = document.body.clientHeight;
+  }
+  return myHeight;
+}
+
+/*
+This function returns the width of the window area available to be written to
+by the browser.
+*/
+function browserWindowWidth() {
+  var myWidth = 0;
+  if( typeof( window.innerWidth ) == 'number' ) {
+    //Non-IE
+    myWidth = window.innerWidth;
+  } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+    //IE 6+ in 'standards compliant mode'
+    myWidth = document.documentElement.clientWidth;
+  } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+    //IE 4 compatible
+    myWidth = document.body.clientWidth;
+  }
+  return myWidth;
+}
+
+// Customized function to denote if the window is closing through a [X] click or page refresh
+function onBrowserExit() 
+{
+	// just check the location of the mouse click
+	// if >= the toolbars; then it's a system generated exit
+	return (window.event.clientY < 0);
+} // function
+window.browserExit = onBrowserExit;
+
+/***********************************************
+* Local Time script- © Dynamic Drive (http://www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit http://www.dynamicdrive.com/ for this script and 100s more.
+***********************************************/
+var weekdaystxt = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
+
+function showServerTime(container, displayversion, baseDate) {
+	if (!document.getElementById || !document.getElementById(container)) return
+	this.container = document.getElementById(container)
+	this.displayversion = displayversion
+	this.localtime = this.serverdate = new Date(baseDate)
+	this.localtime.setTime(this.serverdate.getTime())
+	this.updateTime()
+	this.updateContainer()
+}
+
+showServerTime.prototype.updateTime = function() {
+	var thisobj = this
+	this.localtime.setSeconds(this.localtime.getSeconds() + 1)
+	setTimeout(function() { thisobj.updateTime() }, 1000) //update time every second
+}
+
+showServerTime.prototype.updateContainer = function() {
+	var thisobj = this
+	if (this.displayversion == "long")
+		this.container.innerHTML = this.localtime.toLocaleString()
+	else {
+		var hour = this.localtime.getHours()
+		var minutes = this.localtime.getMinutes()
+		var seconds = this.localtime.getSeconds()
+		var ampm = (hour >= 12) ? "PM" : "AM"
+		var dayofweek = weekdaystxt[this.localtime.getDay()]
+		this.container.innerHTML = formatField(hour, 1) + ":" + formatField(minutes) + ":" + formatField(seconds) + " " + ampm + " (" + dayofweek + ")"
+	}
+	setTimeout(function() { thisobj.updateContainer() }, 1000) //update container every second
+}
+
+function formatField(num, isHour) {
+	if (typeof isHour != "undefined") { //if this is the hour field
+		var hour = (num > 12) ? num - 12 : num
+		return (hour == 0) ? 12 : hour
+	}
+	return (num <= 9) ? "0" + num : num//if this is minute or sec field
+}
+
+if (!Array.prototype.indexOf) {
+	Array.prototype.indexOf = function (needle) {
+		for (var currentIndex = 0; currentIndex < this.length; currentIndex++) {
+			if (this[currentIndex] === needle) {
+				return currentIndex;
+			}
+		}
+		return -1;
+	};
+}
